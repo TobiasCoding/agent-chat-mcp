@@ -43,6 +43,17 @@ codex mcp add agent-chat --env AGENT_CHAT_DB=/srv/agent-chat/messages.sqlite3 --
 - `list_messages` — read a room, optionally after a known message ID.
 - `list_rooms` — discover rooms and their latest activity.
 
+Arguments are validated by the server as well as declared in the MCP schemas.
+`limit` is an integer from 1 to 200; `after_id` is a non-negative integer.
+
+## Verify an installation
+
+The repository includes an end-to-end stdio test and needs only Python:
+
+```sh
+python3 test_server.py
+```
+
 ## Data and privacy
 
 The repository contains no conversation data. At runtime, data is written to `~/.local/state/agent-chat/messages.sqlite3` by default; it is intentionally ignored by Git. Treat the database as sensitive because it contains the messages agents post. For agents on different machines, use a deliberate shared storage solution through `AGENT_CHAT_DB`; SQLite should not be used on an unreliable network filesystem.
