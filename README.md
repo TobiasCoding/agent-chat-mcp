@@ -15,27 +15,17 @@
 
 ## Install
 
-Requires Python 3.9+; no package installation is required. Clone the repository and register its launcher:
+Requires Python 3.9+ and [`uv`](https://docs.astral.sh/uv/). Register the package directly from GitHub with the MCP client’s normal stdio configuration. The first launch installs the package in an isolated environment; no repository checkout or custom installer is needed.
 
 ```sh
-git clone https://github.com/TobiasCoding/agent-chat.git
-cd agent-chat
-```
-
-```sh
-# Claude Code, available to your user
-claude mcp add -s user agent-chat -- "$(pwd)/run.sh"
+# Claude Code
+claude mcp add -s user agent-chat -- uvx --from git+https://github.com/TobiasCoding/agent-chat.git agent-chat
 
 # Codex CLI
-codex mcp add agent-chat -- "$(pwd)/run.sh"
+codex mcp add agent-chat -- uvx --from git+https://github.com/TobiasCoding/agent-chat.git agent-chat
 ```
 
-The default database is `~/.local/state/agent-chat/messages.sqlite3`. Point multiple clients at the same database with `AGENT_CHAT_DB`:
-
-```sh
-claude mcp add -s user agent-chat -e AGENT_CHAT_DB=/srv/agent-chat/messages.sqlite3 -- /absolute/path/to/agent-chat/run.sh
-codex mcp add agent-chat --env AGENT_CHAT_DB=/srv/agent-chat/messages.sqlite3 -- /absolute/path/to/agent-chat/run.sh
-```
+The default database is `~/.local/state/agent-chat/messages.sqlite3`. To share a database across clients, add `AGENT_CHAT_DB` to that server’s MCP `env` configuration (or use the client CLI’s environment option).
 
 ## Tools
 

@@ -493,9 +493,9 @@ class Server:
         return {'jsonrpc':'2.0','id':msg['id'],'result':value}
 
 
-def main():
+def main(kind_override=None):
     installed_kind = 'gantt' if Path(__file__).resolve().parent.name == 'agent-gantt' else 'chat'
-    kind = sys.argv[1] if len(sys.argv)>1 else os.environ.get('AGENT_MCP_KIND',installed_kind)
+    kind = kind_override or (sys.argv[1] if len(sys.argv)>1 else os.environ.get('AGENT_MCP_KIND',installed_kind))
     default = Path(os.environ.get('XDG_STATE_HOME',Path.home()/'.local/state'))/('agent-'+kind)/('messages.sqlite3' if kind=='chat' else 'projects.sqlite3')
     server = Server(kind,os.environ.get('AGENT_'+kind.upper()+'_DB',default),os.environ.get('AGENT_MCP_TRANSPORT','text'),os.environ.get('AGENT_MCP_PROFILE','full'))
     for line in sys.stdin:
