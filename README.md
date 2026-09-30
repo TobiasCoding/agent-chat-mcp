@@ -18,7 +18,7 @@
 Requires Python 3.9+; no package installation is required. Clone the repository and register its launcher:
 
 ```sh
-git clone https://github.com/<owner>/agent-chat.git
+git clone https://github.com/TobiasCoding/agent-chat.git
 cd agent-chat
 ```
 
